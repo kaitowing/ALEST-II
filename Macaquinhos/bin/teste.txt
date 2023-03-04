@@ -1,0 +1,7 @@
+Fazer 100000 rodadas
+Macaco 0 par -> 1 impar -> 1 : 4 : 178 84 1 111
+Macaco 1 par -> 0 impar -> 5 : 2 : 55 34
+Macaco 2 par -> 3 impar -> 4 : 3 : 99 3 7
+Macaco 3 par -> 0 impar -> 4 : 4 : 1 2 3 4
+Macaco 4 par -> 0 impar -> 5 : 4 : 98 234 11 23
+Macaco 5 par -> 2 impar -> 0 : 1 : 3
