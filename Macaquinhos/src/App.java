@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class App {
@@ -15,7 +16,7 @@ public class App {
     public static void bingo(ArrayList<String[]> linha){
         ListaMacacos listademacacos = new ListaMacacos();
         int rodadas = Integer.parseInt(linha.get(0)[1]);
-
+        System.out.println("Entrou na lista loop");
         for (int k = 1; k < linha.size(); k++) {
             int cocos;
             ArrayList<Integer> pedrinhas = new ArrayList<>();
@@ -32,25 +33,39 @@ public class App {
             Macaco macaco = new Macaco(cocos, pedrinhas, numero, impar, par);
             listademacacos.getMacacos().add(macaco);
         }
-        int vezesRodadas=0;
+        
+        System.out.println("Entrou nas rodads loop");
         for (int p = 0; p < rodadas; p++) {
-            vezesRodadas++;
-            for (int i = 0; i < listademacacos.getMacacos().size(); i++) {
+            //long start = System.currentTimeMillis();
+            int k = listademacacos.getMacacos().size();
+            for (int i = 0; i < k; i++) {
+        
                 Macaco macacoAtual = listademacacos.getMacacos().get(i);
-    
+
                 int impar = macacoAtual.getImpar();
                 int par = macacoAtual.getPar();
-                ArrayList<Coco> coco = macacoAtual.getCocos();
-                int tamanho = coco.size();
 
+                Macaco macacopar = listademacacos.buscaMacaco(par);
+                Macaco macacoimpar = listademacacos.buscaMacaco(impar);
+
+                LinkedList<Coco> coco = macacoAtual.getCocos();
+                int tamanho = coco.size();
+                
                 for (int j = 0; j < tamanho; j++) {
                     if(coco.get(0).getPedrinhas()%2 == 0){
-                        listademacacos.buscaMacaco(par).addCoco(listademacacos.getMacacos().get(i).passaCoco());
+                        macacopar.addCoco(macacoAtual.passaCoco());
                     }else{
-                        listademacacos.buscaMacaco(impar).addCoco(listademacacos.getMacacos().get(i).passaCoco());
+                        macacoimpar.addCoco(macacoAtual.passaCoco());
                     }
                 }
+                listademacacos.buscaMacaco(par).trocaMacaco(macacopar);
+                listademacacos.buscaMacaco(par).trocaMacaco(macacoimpar);
+                listademacacos.getMacacos().get(i).trocaMacaco(macacoAtual);
+
             }         
+            //long end = System.currentTimeMillis();
+            //long timeTakenMS = end - start;
+            //System.out.println("Tempo de execução da construção do macaco: " + timeTakenMS + "ms");
         }
         Macaco maior = listademacacos.getMacacos().get(0);
 
@@ -59,14 +74,42 @@ public class App {
                 maior = listademacacos.getMacacos().get(i);
             }
         }
-        String nomeGanhador = vezesRodadas + "; Macaco Ganhador: " + maior.getNome();
+        String nomeGanhador = "Macaco Ganhador: " + maior.getNome();
         System.out.println(nomeGanhador);
     }
 
     public static void reader(){
-            Path path = Paths.get("src\\teste.txt");
+        String stringnome = "";
+        for (int i = 0; i < 8; i++) {
+            switch(i){
+                case 0:
+                stringnome = String.format("%04d", 50);
+                break;
+                case 1:
+                stringnome = String.format("%04d", 100);
+                break;
+                case 2:
+                stringnome = String.format("%04d", 200);
+                break;
+                case 3:
+                stringnome = String.format("%04d", 400);
+                break;
+                case 4:
+                stringnome = String.format("%04d", 600);
+                break;
+                case 5:
+                stringnome = String.format("%04d", 800);
+                break;
+                case 6:
+                stringnome = String.format("%04d", 900);
+                break;
+                case 7:
+                stringnome = "1000";
+            }
+
+            Path path = Paths.get("src\\"+ stringnome + "macacos.txt");
             try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
-                System.out.println("Teste rodando");
+                System.out.println("Teste" + stringnome +" rodando");
                 ArrayList<String[]> Linhas = new ArrayList<>();
                 while (sc.hasNext()){
                     String str = sc.nextLine();
@@ -76,6 +119,7 @@ public class App {
             App.bingo(Linhas);
         }catch (IOException x){
                 System.err.format("Erro de E/S: %s%n", x);
+        }
         }
     }
 }

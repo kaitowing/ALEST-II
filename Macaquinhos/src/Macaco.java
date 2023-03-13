@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Macaco {
-    private ArrayList<Coco> cocos = new ArrayList<Coco>();
+    private LinkedList<Coco> cocos = new LinkedList<Coco>();
     private int nome;
     private int impar;
     private int par;
@@ -16,6 +17,10 @@ public class Macaco {
         }
     }
 
+    public void trocaMacaco(Macaco macaconovo){
+        this.cocos = macaconovo.cocos;
+    }
+
     public Coco passaCoco(){
         return cocos.remove(0);
     } 
@@ -27,14 +32,14 @@ public class Macaco {
     /**
      * @return ArrayList<Coco> return the cocos
      */
-    public ArrayList<Coco> getCocos() {
+    public LinkedList<Coco> getCocos() {
         return cocos;
     }
 
     /**
      * @param cocos the cocos to set
      */
-    public void setCocos(ArrayList<Coco> cocos) {
+    public void setCocos(LinkedList<Coco> cocos) {
         this.cocos = cocos;
     }
 
