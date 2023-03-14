@@ -8,12 +8,8 @@ public class ListaMacacos {
     }
 
     public Macaco buscaMacaco(int nomeMacaco){
-        for (int i = 0; i < macacos.size(); i++) {
-            if(macacos.get(i).getNome() == nomeMacaco){
-                return macacos.get(i);
-            }
-        }
-        return null;
+            return macacos.get(nomeMacaco);
+          
     }
 
     /**

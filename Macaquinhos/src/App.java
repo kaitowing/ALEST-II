@@ -4,8 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class App {
@@ -16,7 +14,7 @@ public class App {
     public static void bingo(ArrayList<String[]> linha){
         ListaMacacos listademacacos = new ListaMacacos();
         int rodadas = Integer.parseInt(linha.get(0)[1]);
-        System.out.println("Entrou na lista loop");
+        //System.out.println("Entrou na lista loop");
         for (int k = 1; k < linha.size(); k++) {
             int cocos;
             ArrayList<Integer> pedrinhas = new ArrayList<>();
@@ -34,9 +32,9 @@ public class App {
             listademacacos.getMacacos().add(macaco);
         }
         
-        System.out.println("Entrou nas rodads loop");
+        //System.out.println("Entrou nas rodads loop");
         for (int p = 0; p < rodadas; p++) {
-            //long start = System.currentTimeMillis();
+            //
             int k = listademacacos.getMacacos().size();
             for (int i = 0; i < k; i++) {
         
@@ -47,38 +45,29 @@ public class App {
 
                 Macaco macacopar = listademacacos.buscaMacaco(par);
                 Macaco macacoimpar = listademacacos.buscaMacaco(impar);
-
-                LinkedList<Coco> coco = macacoAtual.getCocos();
-                int tamanho = coco.size();
                 
-                for (int j = 0; j < tamanho; j++) {
-                    if(coco.get(0).getPedrinhas()%2 == 0){
-                        macacopar.addCoco(macacoAtual.passaCoco());
-                    }else{
-                        macacoimpar.addCoco(macacoAtual.passaCoco());
-                    }
-                }
+                
+                macacopar.trocaCoco(macacoAtual.getCocosPares(), true);
+                macacoimpar.trocaCoco(macacoAtual.getCocosImpares(), false);
                 listademacacos.buscaMacaco(par).trocaMacaco(macacopar);
                 listademacacos.buscaMacaco(par).trocaMacaco(macacoimpar);
                 listademacacos.getMacacos().get(i).trocaMacaco(macacoAtual);
 
             }         
-            //long end = System.currentTimeMillis();
-            //long timeTakenMS = end - start;
-            //System.out.println("Tempo de execução da construção do macaco: " + timeTakenMS + "ms");
         }
         Macaco maior = listademacacos.getMacacos().get(0);
 
         for (int i = 1; i < listademacacos.getMacacos().size(); i++) {
-            if(listademacacos.getMacacos().get(i).getCocos().size() >= maior.getCocos().size()){
+            if(listademacacos.getMacacos().get(i).getCocos() >= maior.getCocos()){
                 maior = listademacacos.getMacacos().get(i);
             }
         }
-        String nomeGanhador = "Macaco Ganhador: " + maior.getNome();
+        String nomeGanhador = "Macaco Ganhador: " + maior.getNome() + "\n";
         System.out.println(nomeGanhador);
     }
 
     public static void reader(){
+        long start = System.currentTimeMillis();
         String stringnome = "";
         for (int i = 0; i < 8; i++) {
             switch(i){
@@ -106,8 +95,7 @@ public class App {
                 case 7:
                 stringnome = "1000";
             }
-
-            Path path = Paths.get("src\\"+ stringnome + "macacos.txt");
+            Path path = Paths.get("Macaquinhos\\src\\testes\\"+ stringnome + "macacos.txt");
             try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
                 System.out.println("Teste" + stringnome +" rodando");
                 ArrayList<String[]> Linhas = new ArrayList<>();
@@ -121,5 +109,8 @@ public class App {
                 System.err.format("Erro de E/S: %s%n", x);
         }
         }
+        long end = System.currentTimeMillis();
+        long timeTakenMS = end - start;
+        System.out.println("Tempo de execução da construção do macaco: " + timeTakenMS + "ms");
     }
 }

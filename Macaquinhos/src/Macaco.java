@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 
 public class Macaco {
-    private LinkedList<Coco> cocos = new LinkedList<Coco>();
+    private LinkedLista cocosPares = new LinkedLista();
+    private LinkedLista cocosImpares = new LinkedLista();
     private int nome;
     private int impar;
     private int par;
@@ -13,35 +14,41 @@ public class Macaco {
         par = pog;
         for (int i = 0; i < cocos; i++) {
             Coco newcoco = new Coco(pedrinhas.get(i));
-            this.cocos.add(newcoco);
+            if(newcoco.getPedrinhas()%2 == 0){
+                cocosPares.add(newcoco);
+            }else cocosImpares.add(newcoco);
         }
     }
 
     public void trocaMacaco(Macaco macaconovo){
-        this.cocos = macaconovo.cocos;
+        this.cocosImpares = macaconovo.cocosImpares;
+        this.cocosPares = macaconovo.cocosPares;
     }
 
-    public Coco passaCoco(){
-        return cocos.remove(0);
+    public Coco passaCoco(boolean valor){
+        if(valor) return cocosPares.removeFirst();
+        else return cocosImpares.removeFirst();
     } 
     
     public void addCoco(Coco coco){
-        cocos.add(coco);
+        if(coco.getPedrinhas()%2 == 0) cocosPares.add(coco);
+        else cocosImpares.add(coco);
     }
 
     /**
      * @return ArrayList<Coco> return the cocos
      */
-    public LinkedList<Coco> getCocos() {
-        return cocos;
+    public LinkedLista getCocosPares() {
+        return cocosPares;
+    }
+
+    public LinkedLista getCocosImpares() {
+        return cocosImpares;
     }
 
     /**
      * @param cocos the cocos to set
      */
-    public void setCocos(LinkedList<Coco> cocos) {
-        this.cocos = cocos;
-    }
 
     /**
      * @return int return the nome
@@ -84,6 +91,16 @@ public class Macaco {
      */
     public void setPar(int par) {
         this.par = par;
+    }
+
+    public int getCocos() {
+        return cocosImpares.getSize() + cocosPares.getSize();
+    }
+
+    public void trocaCoco(LinkedLista cocosnovos, boolean valor){
+        if(valor){
+            cocosPares.addAll(cocosnovos);
+        }else cocosImpares.addAll(cocosnovos);
     }
 
 }
