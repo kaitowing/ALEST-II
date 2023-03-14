@@ -22,6 +22,13 @@ public class LinkedLista {
         this.tail = null; // inicializado com null
         this.size = 0;
     }
+
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+    
     
     public void add(Coco data) {
         Node newNode = new Node(data);

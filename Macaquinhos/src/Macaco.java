@@ -40,10 +40,12 @@ public class Macaco {
      */
     public LinkedLista getCocosPares() {
         return cocosPares;
+        
     }
 
     public LinkedLista getCocosImpares() {
-        return cocosImpares;
+        
+        return cocosImpares ;
     }
 
     /**

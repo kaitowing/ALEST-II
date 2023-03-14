@@ -38,7 +38,7 @@ public class App {
             int k = listademacacos.getMacacos().size();
             for (int i = 0; i < k; i++) {
         
-                Macaco macacoAtual = listademacacos.getMacacos().get(i);
+                Macaco macacoAtual = listademacacos.buscaMacaco(i);
 
                 int impar = macacoAtual.getImpar();
                 int par = macacoAtual.getPar();
@@ -48,18 +48,20 @@ public class App {
                 
                 
                 macacopar.trocaCoco(macacoAtual.getCocosPares(), true);
+                macacoAtual.getCocosPares().clear();
                 macacoimpar.trocaCoco(macacoAtual.getCocosImpares(), false);
+                macacoAtual.getCocosImpares().clear();
                 listademacacos.buscaMacaco(par).trocaMacaco(macacopar);
-                listademacacos.buscaMacaco(par).trocaMacaco(macacoimpar);
-                listademacacos.getMacacos().get(i).trocaMacaco(macacoAtual);
+                listademacacos.buscaMacaco(impar).trocaMacaco(macacoimpar);
+                listademacacos.buscaMacaco(i).trocaMacaco(macacoAtual);
 
             }         
         }
         Macaco maior = listademacacos.getMacacos().get(0);
 
-        for (int i = 1; i < listademacacos.getMacacos().size(); i++) {
-            if(listademacacos.getMacacos().get(i).getCocos() >= maior.getCocos()){
-                maior = listademacacos.getMacacos().get(i);
+        for (Macaco macaco : listademacacos.getMacacos()) {
+            if(macaco.getCocos()>maior.getCocos()){
+                maior  = macaco;
             }
         }
         String nomeGanhador = "Macaco Ganhador: " + maior.getNome() + "\n";
@@ -95,7 +97,7 @@ public class App {
                 case 7:
                 stringnome = "1000";
             }
-            Path path = Paths.get("Macaquinhos\\src\\testes\\"+ stringnome + "macacos.txt");
+            Path path = Paths.get("src\\testes\\"+ stringnome + "macacos.txt");
             try (Scanner sc = new Scanner(Files.newBufferedReader(path, StandardCharsets.UTF_8))){
                 System.out.println("Teste" + stringnome +" rodando");
                 ArrayList<String[]> Linhas = new ArrayList<>();
